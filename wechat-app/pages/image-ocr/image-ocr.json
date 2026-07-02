@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "文字识别",
+  "usingComponents": {
+    "single": "./single"
+  }
+}

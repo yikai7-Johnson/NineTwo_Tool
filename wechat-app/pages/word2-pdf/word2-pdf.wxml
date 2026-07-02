@@ -1,0 +1,10 @@
+<view class="demo">
+  <view class="demo-title">Word转PDF</view>
+  <view class="demo-desc"></view>
+  <t-demo title="" desc="">
+    <view class="upload-demo">
+      <view class="upload-demo__title">上传doc、docx文件</view>
+      <single />
+    </view>
+  </t-demo>
+</view>

@@ -1,0 +1,56 @@
+<view class="wrapper">
+  <t-upload mediaType="{{['video','image']}}" max="{{1}}" files="{{fileList}}" bind:add="handleAdd" bind:remove="handleRemove">
+  </t-upload>
+  <view>
+    <view>{{imgSize}}</view>
+    <view style="display: flex;">
+      <t-input style="{{style}}" label="宽" placeholder="请输入" value="{{imgWidth}}" data-field-name="imgWidth" bind:change='handleInputChange'/>
+      <t-input style="{{style}}" label="高" placeholder="请输入" value="{{imgHeight}}" data-field-name="imgHeight" bind:change='handleInputChange'/>
+    </view>
+    <view>
+      <view>
+        <t-cell title="质量系数" arrow hover note="{{cityText}}" bind:click="onCityPicker" />
+        <t-picker visible="{{cityVisible}}" value="{{cityValue}}" data-key="city" title="质量系数" cancelBtn="取消" confirmBtn="确认" usingCustomNavbar bindchange="onPickerChange" bindpick="onColumnChange" bindcancel="onPickerCancel">
+          <t-picker-item options="{{citys}}">
+            <block wx:for="{{citys}}" wx:key="index" wx:for-item="option">
+              <view wx:if="{{option.tag}}" slot="label-suffix--{{index}}" class="label-suffix">
+                <t-tag size="small" theme="primary">{{option.tag}}</t-tag>
+              </view>
+            </block>
+          </t-picker-item>
+        </t-picker>
+      </view>
+      <view>
+        <t-cell title="图片格式" arrow hover note="{{imgSuffixText}}" bind:click="onImgSuffixPicker" />
+        <t-picker visible="{{imgSuffixVisible}}" value="{{imgSuffixValue}}" data-key="imgSuffix" title="图片格式" cancelBtn="取消" confirmBtn="确认" usingCustomNavbar bindchange="onPickerChange" bindpick="onColumnChange" bindcancel="onPickerCancel">
+          <t-picker-item options="{{imgSuffixArr}}">
+            <block wx:for="{{imgSuffixArr}}" wx:key="index" wx:for-item="option">
+              <view wx:if="{{option.tag}}" slot="label-suffix--{{index}}" class="label-suffix">
+                <t-tag size="small" theme="primary">{{option.tag}}</t-tag>
+              </view>
+            </block>
+          </t-picker-item>
+        </t-picker>
+      </view>
+    </view>
+
+  </view>
+
+  <t-demo>
+    <t-button theme="primary" size="large" block t-class="external-class" bind:tap="onUpload">提交</t-button>
+  </t-demo>
+  <t-demo title="压缩后">
+    <view style="display: flex;justify-content: space-around;">
+      <view>{{psfSize}}</view>
+      <view>宽：{{psfWidth}}</view>
+      <view>高：{{psfHeight}}</view>
+      <view>格式：{{psfType}}</view>
+    </view>
+    <t-image src="{{imageBase64}}" mode="heightFix" aria-label="一个放置在墙角的黄色行李箱" block bind:tap="onClick" />
+  </t-demo>
+
+  
+</view>
+
+<t-message id="t-message" />
+<t-message visible="{{msgVisible}}"/>

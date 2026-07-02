@@ -1,0 +1,4 @@
+.external-class {
+  border-radius: 0 !important;
+  background-color: #2A87D3;
+}

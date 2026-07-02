@@ -1,0 +1,103 @@
+server:
+  port: 8090
+  servlet:
+    session:
+      timeout: 30m
+  tomcat:
+    max-http-form-post-size: -1
+  ssl:
+    key-store-password: your-jks-password    #填写jks-password.txt文件内的密码。
+    key-store-type: JKS #JKS格式证书密钥库类型。PFX格式的证书密钥库类型为PKCS12。
+    key-store: classpath:your-domain.jks   #您需要使用实际的证书名称替换domain_name.jks。
+spring:
+  # 数据源配置
+  datasource:
+    dynamic:
+      p6spy: true # 默认false,建议线上关闭
+      # 默认数据源，默认master
+      primary: master
+      # 严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      strict: false
+      # 数据库连接信息配置
+      datasource:
+        # 主库
+        master:
+          url: jdbc:postgresql://localhost:5433/ninetwo-1
+          username: postgres
+          password: your-db-password
+          driver-class-name: org.postgresql.Driver
+          type: com.zaxxer.hikari.HikariDataSource
+          hikari:
+            minimum-idle: 5
+            maximum-pool-size: 15
+            auto-commit: true
+            idle-timeout: 30000
+            pool-name: MyHikariCP
+            max-lifetime: 120000
+            keepaliveTime: 30000
+            connection-timeout: 30000
+            connection-test-query: SELECT 1
+        # 从库
+        slave:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://localhost:5433/ninetwo-2
+          username: postgres
+          password: your-db-password
+          hikari:
+            minimum-idle: 5
+            maximum-pool-size: 15
+            auto-commit: true
+            idle-timeout: 30000
+            pool-name: MyHikariCP
+            max-lifetime: 120000
+            keepaliveTime: 30000
+            connection-timeout: 30000
+            connection-test-query: SELECT 1
+  jpa:
+    database: DEFAULT
+    #控制台显示SQL
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    database-platform: com.ninetwo.boot.config.Dialect
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        hbm2ddl:
+          auto: update
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 2048MB
+  mvc:
+    servlet:
+      load-on-startup: 1
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    auto-mapping-behavior: full
+  mapper-locations: classpath:mapper/*Mapping.xml
+  type-aliases-package: com.ninetwo.*.*
+  global-config:
+    db-config:
+      logic-not-delete-value: 1
+      logic-delete-value: 0
+token:
+  expire:
+    seconds: 86400
+log:
+  level:
+    maxsize: 30MB
+logging:
+  file:
+    path: /home/ninetwo/log/ninetwotoolbox.log
+
+file-storage:
+  path: /home/ninetwo/files/

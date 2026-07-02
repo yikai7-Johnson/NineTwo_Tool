@@ -1,0 +1,10 @@
+<view class="demo">
+  <view class="demo-title">OCR识别</view>
+  <view class="demo-desc"></view>
+  <t-demo title="" desc="">
+    <view class="upload-demo">
+      <view class="upload-demo__title">上传图片</view>
+      <single />
+    </view>
+  </t-demo>
+</view>

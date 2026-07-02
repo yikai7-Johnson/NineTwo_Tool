@@ -1,0 +1,20 @@
+<view class="wrapper">
+  <t-demo>
+    <view style="background-color: #eeee;padding: 20rpx;margin-bottom:10px;box-shadow：10px 10px 20px 0 #ff0">
+      <text selectable user-select>文件： {{uploadFileName}}</text>
+    </view>
+    <t-button theme="primary" size="large" block t-class="external-class" bind:tap="onUploadFile">选择文件</t-button>
+  </t-demo>
+  <t-demo>
+    <t-button theme="primary" size="large" block t-class="external-class" bind:tap="onUpload">转换</t-button>
+  </t-demo>
+  <t-demo title="结果">
+    <view style="background-color: #eeee;border-radius: 20rpx;padding: 20rpx;box-shadow：10px 10px 20px 0 #ff0" bind:tap="onClick">
+      <text selectable user-select>{{oldname}}</text>
+    </view>
+  </t-demo>
+
+</view>
+
+<t-message id="t-message" />
+<t-message visible="{{msgVisible}}"/>

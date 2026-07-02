@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "PDF转Word",
+  "usingComponents": {
+    "single": "./single"
+  }
+}

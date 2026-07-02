@@ -1,0 +1,20 @@
+<view class="wrapper">
+  <t-upload mediaType="{{['video','image']}}" max="{{1}}" files="{{fileList}}" bind:add="handleAdd" bind:remove="handleRemove">
+  </t-upload>
+
+  <t-demo>
+    <t-button theme="primary" size="large" block t-class="external-class" bind:tap="onUpload">提交</t-button>
+  </t-demo>
+  <t-demo title="识别后">
+    <t-image src="{{imageBase64}}" mode="heightFix" aria-label="一个放置在墙角的黄色行李箱" block bind:tap="onClick" />
+  </t-demo>
+  <t-demo title="文本块">
+    <view style="background-color: #eeee;border-radius: 20rpx;padding: 20rpx;box-shadow：10px 10px 20px 0 #ff0">
+      <text selectable user-select>{{imageStr}}</text>
+    </view>
+  </t-demo>
+
+</view>
+
+<t-message id="t-message" />
+<t-message visible="{{msgVisible}}"/>

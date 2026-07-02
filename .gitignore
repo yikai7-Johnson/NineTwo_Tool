@@ -1,0 +1,53 @@
+# Windows
+[Dd]esktop.ini
+Thumbs.db
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+
+# Node.js
+node_modules/
+
+# Build output
+dist/
+
+# Electron resources (large binaries)
+electron/resources/jre/
+electron/resources/postgres/
+electron/resources/app.jar
+
+# Electron build output
+release/
+
+# Node modules
+node_modules/
+
+# IDE
+.idea/
+*.iml
+
+# Claude
+.claude/
+
+# Build artifacts
+target/
+*.class
+*.jar
+
+# Sensitive files
+*.jks
+*.pem
+*.key
+*.p12
+*.pfx
+*.cert
+.env
+.env.*
+
+# Password files
+jks-password.txt

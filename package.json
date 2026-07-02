@@ -1,0 +1,96 @@
+{
+  "name": "nine-two-toolbox",
+  "version": "1.0.0",
+  "description": "NineTwoTool Desktop",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "cd web-app && npm run dev",
+    "dev:electron": "electron .",
+    "build:frontend": "cd web-app && npm run build",
+    "build:backend": "cd toolbox-server && mvn clean package -DskipTests && node -e \"fs=require('fs');fs.copyFileSync('target/NinetwoToolboxServer-1.0-SNAPSHOT.jar','../electron/resources/app.jar')\"",
+    "build:electron": "electron-builder --win --config",
+    "build:all": "npm run build:frontend && npm run build:backend && npm run build:electron",
+    "build:all:skip-backend": "npm run build:frontend && npm run build:electron"
+  },
+  "build": {
+    "appId": "com.ninetwo.toolbox.app",
+    "productName": "NineTwoTool",
+    "copyright": "Copyright © 2024 NineTwoTool",
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "signAndEditExecutable": false,
+      "icon": "ninetwo.ico",
+      "executableName": "NineTwoToolApp"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "NineTwoTool",
+      "installerIcon": "ninetwo.ico",
+      "uninstallerIcon": "ninetwo.ico",
+      "installerHeaderIcon": "ninetwo.ico",
+      "deleteAppDataOnUninstall": false,
+      "allowElevation": true,
+      "runAfterFinish": true,
+      "include": "electron/installer.nsh"
+    },
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/main.js",
+      "electron/preload.js",
+      "web-app/dist/**/*",
+      "ninetwo.png",
+      "ninetwo.ico"
+    ],
+    "extraResources": [
+      {
+        "from": "electron/resources/jre",
+        "to": "jre"
+      },
+      {
+        "from": "electron/resources/app.jar",
+        "to": "app.jar"
+      },
+      {
+        "from": "electron/resources/application-electron.yml",
+        "to": "application-electron.yml"
+      },
+      {
+        "from": "ninetwo.ico",
+        "to": "ninetwo.ico"
+      },
+      {
+        "from": "ninetwo.png",
+        "to": "ninetwo.png"
+      }
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/**/*.node",
+      "ninetwo.ico"
+    ],
+    "compression": "maximum",
+    "removePackageScripts": true,
+    "afterPack": "electron/after-pack.js"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "dependencies": {
+    "png-to-ico": "^3.0.1",
+    "to-ico": "^1.1.5"
+  }
+}

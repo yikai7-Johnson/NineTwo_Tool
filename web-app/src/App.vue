@@ -305,6 +305,7 @@ import MonacoEditor from '@guolao/vue-monaco-editor'
 import { Plus, FolderOpened, Download, DocumentCopy, MagicStick, RefreshRight, CopyDocument, Close } from '@element-plus/icons-vue'
 
 const activeTab = ref('json-formatter')
+let _hoverFixInstalled = false
 
 // 从 localStorage 恢复上次选中的选项卡
 onMounted(() => {
@@ -429,6 +430,29 @@ const resetEditorWidths = () => {
 const onEditorMount = (id, editor) => {
   const item = jsonEditors.value.find(e => e.id === id)
   if (item) item.editorRef = editor
+
+  // 修复 Monaco 查找框按钮 hover tooltip 闪烁问题（仅首次挂载时初始化）
+  if (!_hoverFixInstalled) {
+    _hoverFixInstalled = true
+    const observer = new MutationObserver((mutations) => {
+      // 检查当前是否有查找框可见
+      const hasVisibleFind = document.querySelector('.find-widget.visible')
+      if (!hasVisibleFind) return
+      // 移除新出现的 Monaco hover widget
+      for (const m of mutations) {
+        for (const node of m.addedNodes) {
+          if (node.nodeType === 1) {
+            const el = /** @type {Element} */ (node)
+            if (el.matches?.('.monaco-hover.workbench-hover') ||
+                el.querySelector?.('.monaco-hover.workbench-hover')) {
+              el.remove()
+            }
+          }
+        }
+      }
+    })
+    observer.observe(document.body, { childList: true, subtree: true })
+  }
 }
 
 const beautifyJson = (id) => {
@@ -1021,3 +1045,4 @@ const downloadFile = async (filename, oldname) => {
   height: 50px;
 }
 </style>
+
